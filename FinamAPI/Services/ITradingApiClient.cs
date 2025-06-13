@@ -2,12 +2,12 @@
 
 namespace FinamAPI.Services
 {
-    public interface ITradingApiClient
+    public interface IOrderService
     {
-        Task<long> CreateOrderAsync(NewOrderRequest request);
-        Task<IEnumerable<Order>> GetOrdersAsync(string clientId, bool includeMatched = false, bool includeCanceled = false, bool includeActive = true);
-        Task CancelOrderAsync(CancelOrderRequest request);
-        Task<IEnumerable<Security>> GetSecuritiesAsync(SecurityFilter filter = null);
-        Task<Portfolio> GetPortfolioAsync(PortfolioFilter filter);
+        Task<ApiResponse<List<Order>>> GetOrdersAsync(string clientId, bool includeMatched = false,
+            bool includeCanceled = false, bool includeActive = true);
+
+        Task<ApiResponse<OrderResponse>> PlaceOrderAsync(OrderRequest request);
+        Task<ApiResponse<bool>> CancelOrderAsync(CancelOrderRequest request);
     }
 }

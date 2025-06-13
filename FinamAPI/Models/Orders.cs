@@ -92,6 +92,7 @@ namespace FinamAPI.Models
         [JsonPropertyName("time")]
         public DateTime? Time { get; set; }
     }
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum OrderStatus
     {
@@ -109,36 +110,40 @@ namespace FinamAPI.Models
         [JsonPropertyName("clientId")]
         public string ClientId { get; set; }
 
-        [JsonPropertyName("securityBoard")]
-        public string SecurityBoard { get; set; }
-
         [JsonPropertyName("securityCode")]
         public string SecurityCode { get; set; }
 
+        [JsonPropertyName("board")]
+        public string Board { get; set; }
+
+        [JsonPropertyName("market")]
+        public Market Market { get; set; }
+
         [JsonPropertyName("buySell")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public BuySell BuySell { get; set; }
 
         [JsonPropertyName("quantity")]
         public int Quantity { get; set; }
 
-        [JsonPropertyName("useCredit")]
-        public bool UseCredit { get; set; }
-
         [JsonPropertyName("price")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public DecimalValue? Price { get; set; }
+        public DecimalValue Price { get; set; }
 
         [JsonPropertyName("property")]
         public string Property { get; set; } = "PutInQueue";
 
-        [JsonPropertyName("condition")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public OrderCondition? Condition { get; set; }
-
         [JsonPropertyName("validBefore")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public OrderValidBeforeType? ValidBefore { get; set; }
+    }
+
+    public class OrderResponse
+    {
+        [JsonPropertyName("transactionId")]
+        public long TransactionId { get; set; }
+
+        [JsonPropertyName("orderNo")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public long? OrderNo { get; set; }
     }
     public class CancelOrderRequest
     {
