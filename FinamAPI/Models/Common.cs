@@ -1,7 +1,55 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Net;
+using System.Text.Json.Serialization;
 
 namespace FinamAPI.Models
 {
+
+    public class RateLimitInfo
+    {
+        public int MaxRequests { get; }
+        public TimeSpan TimeWindow { get; }
+        public int RemainingRequests { get; private set; }
+        public DateTime WindowStartTime { get; private set; }
+
+        public RateLimitInfo(int maxRequests, TimeSpan timeWindow)
+        {
+            MaxRequests = maxRequests;
+            TimeWindow = timeWindow;
+            RemainingRequests = maxRequests;
+            WindowStartTime = DateTime.UtcNow;
+        }
+
+        public bool CanMakeRequest()
+        {
+            ResetWindowIfExpired();
+            return RemainingRequests > 0;
+        }
+
+        public void DecrementRequests()
+        {
+            ResetWindowIfExpired();
+            if (RemainingRequests > 0)
+                RemainingRequests--;
+        }
+
+        public TimeSpan GetTimeUntilReset()
+        {
+            var timePassed = DateTime.UtcNow - WindowStartTime;
+            return timePassed < TimeWindow
+                ? TimeWindow - timePassed
+                : TimeSpan.Zero;
+        }
+
+        private void ResetWindowIfExpired()
+        {
+            if (DateTime.UtcNow - WindowStartTime >= TimeWindow)
+            {
+                RemainingRequests = MaxRequests;
+                WindowStartTime = DateTime.UtcNow;
+            }
+        }
+    }
+
     public class ApiResponse<T>
     {
         [JsonPropertyName("error")]
@@ -24,6 +72,7 @@ namespace FinamAPI.Models
         [JsonPropertyName("data")]
         public string? Data { get; set; }
     }
+
     public class DecimalValue
     {
         [JsonPropertyName("num")]
@@ -42,6 +91,28 @@ namespace FinamAPI.Models
                 Num = (long)(value * (decimal)Math.Pow(10, scale)),
                 Scale = scale
             };
+        }
+    }
+
+    public class ApiException : Exception
+    {
+        public HttpStatusCode StatusCode { get; }
+
+        public ApiException(string message, HttpStatusCode statusCode)
+            : base(message)
+        {
+            StatusCode = statusCode;
+        }
+    }
+
+    public class RateLimitExceededException : ApiException
+    {
+        public TimeSpan RetryAfter { get; }
+
+        public RateLimitExceededException(TimeSpan retryAfter)
+            : base("Rate limit exceeded", HttpStatusCode.TooManyRequests)
+        {
+            RetryAfter = retryAfter;
         }
     }
 }
