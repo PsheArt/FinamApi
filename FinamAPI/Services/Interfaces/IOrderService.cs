@@ -1,6 +1,6 @@
 ﻿using FinamAPI.Models;
 
-namespace FinamAPI.Services
+namespace FinamAPI.Services.Interfaces
 {
     public interface IOrderService
     {

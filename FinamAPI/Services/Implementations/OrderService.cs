@@ -1,7 +1,9 @@
 ﻿using FinamAPI.Models;
+using FinamAPI.Services.HttpClient;
+using FinamAPI.Services.Interfaces;
 using System.Text.Json;
 
-namespace FinamAPI.Services
+namespace FinamAPI.Services.Implementations
 {
     public class OrderService : IOrderService
     {

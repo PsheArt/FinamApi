@@ -3,16 +3,17 @@ using FinamAPI.Models;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text;
+using System.Net.Http;
 
-namespace FinamAPI.Services
+namespace FinamAPI.Services.HttpClient
 {
     public class HttpClientService
     {
-        private readonly HttpClient _httpClient;
+        private readonly System.Net.Http.HttpClient _httpClient;
         private readonly FinamApiSettings _settings;
 
         public HttpClientService(
-            HttpClient httpClient,
+             System.Net.Http.HttpClient httpClient,
             IOptions<FinamApiSettings> settings)
         {
             _httpClient = httpClient;
@@ -65,5 +66,7 @@ namespace FinamAPI.Services
             return JsonSerializer.Deserialize<T>(content,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+       
     }
 }

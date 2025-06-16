@@ -2,7 +2,7 @@
 using FinamAPI.Models;
 using Microsoft.Extensions.Options;
 
-namespace FinamAPI.Services
+namespace FinamAPI.Services.HttpClient
 {
     public class ApiRateLimiter
     {
