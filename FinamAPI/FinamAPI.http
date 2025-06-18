@@ -1,6 +1,6 @@
 @FinamAPI_HostAddress = http://localhost:5106
 
-GET {{FinamAPI_HostAddress}}/weatherforecast/
+GET {{FinamAPI_HostAddress}}/
 Accept: application/json
 
 ###

@@ -39,18 +39,14 @@ namespace FinamAPI.Services.Implementations
 
                 var request = new AuthRequest
                 {
-                    ClientId = _settings.ClientId,
                     ClientSecret = _settings.PublicApiKey
                 };
 
                 var response = await _httpClient.PostAsync<AuthRequest, ApiResponse<AuthResponse>>("/api/v1/auth", request);
 
-                var content = await response.Content.ReadAsStringAsync();
-                _authResponse = JsonSerializer.Deserialize<AuthResponse>(content);
-
-                if (_authResponse != null)
+                if (response != null)
                 {
-                    _authResponse.TokenExpiration = DateTime.UtcNow.AddSeconds(_authResponse.ExpiresIn - 60); // 60 сек запас
+                    response.Data.TokenExpiration = DateTime.UtcNow.AddSeconds(_authResponse.ExpiresIn - 60); // 60 сек запас
                     _logger.LogInformation("Successfully authenticated. Token expires at {Expiration}", _authResponse.TokenExpiration);
                 }
 
