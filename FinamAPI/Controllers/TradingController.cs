@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinamAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TradingController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -15,22 +15,24 @@ namespace FinamAPI.Controllers
             _authService = authService;
         }
 
+        [HttpGet]
+        public IActionResult Index() => Ok("Trading service is running");
+
         [HttpGet("token")]   
         public async Task<IActionResult> GetToken()
         {
             try
             {
                 var response = await _authService.AuthenticateAsync();
-                return Ok(new
-                {
-                    Token = response.AccessToken,
-                    ExpiresIn = response.ExpiresIn,
-                    ExpiresAt = response.TokenExpiration
-                });
+
+                if (!response.IsSuccess)
+                    return BadRequest("Authentication failed"); 
+
+                return Ok(new { Token = response.AccessToken }); 
             }
-            catch (ApiException ex)
+            catch (Exception ex)
             {
-                return StatusCode((int)ex.StatusCode, ex.Message);
+                return StatusCode(500, ex.Message); // 500
             }
         }
     }
