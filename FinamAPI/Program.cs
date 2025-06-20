@@ -9,6 +9,7 @@ using Polly.Extensions.Http;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddFinamApi(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false);
 
@@ -17,7 +18,6 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-builder.Services.AddFinamApi(builder.Configuration);
 
 
 if (builder.Environment.IsDevelopment())
