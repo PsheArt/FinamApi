@@ -22,7 +22,7 @@ namespace FinamAPI.Services.Implementations
         {
             await _rateLimiter.WaitIfNeeded("orders");
 
-            var endpoint = $"/api/v1/orders?clientId={clientId}" +
+            var endpoint = $"v1/accounts/?clientId={clientId}/orders" +
                           $"&includeMatched={includeMatched}" +
                           $"&includeCanceled={includeCanceled}" +
                           $"&includeActive={includeActive}";
@@ -34,7 +34,7 @@ namespace FinamAPI.Services.Implementations
         {
             await _rateLimiter.WaitIfNeeded("orders");
             return await _httpClient.PostAsync<OrderRequest, ApiResponse<OrderResponse>>(
-                "/api/v1/orders", request);
+                "v1/accounts/", request);
         }
 
         public async Task<ApiResponse<bool>> CancelOrderAsync(CancelOrderRequest request)
@@ -42,7 +42,7 @@ namespace FinamAPI.Services.Implementations
             await _rateLimiter.WaitIfNeeded("orders");
 
             var response = await _httpClient.DeleteAsync(
-                $"/api/v1/orders?clientId={request.ClientId}&transactionId={request.TransactionId}");
+                $"v1/accounts/{request.ClientId}/orders/{request.TransactionId}");
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<ApiResponse<bool>>(content);
