@@ -29,6 +29,8 @@ namespace FinamAPI.Services.HttpClient
 
             services.AddSingleton<ApiRateLimiter>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IPortfolioService, PortfolioService>();
+            services.AddScoped<IStopService, StopService>();
 
             return services;
         }
