@@ -7,3 +7,4 @@ namespace FinamAPI.Services.Interfaces
         Task<ApiResponse<List<Security>>> GetSecuritiesAsync();
         Task<ApiResponse<List<Candle>>> GetCandlesAsync(string securityCode, DateTime from, DateTime to, string timeframe);
     }
+}
