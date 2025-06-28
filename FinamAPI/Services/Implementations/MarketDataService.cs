@@ -34,44 +34,5 @@ namespace FinamAPI.Services.Implementations
             return await _httpClient.GetAsync<ApiResponse<List<Candle>>>(endpoint);
         }
     }
-
-    public class TradingService : ITradingService
-    {
-        private readonly HttpClientService _httpClient;
-        private readonly ApiRateLimiter _rateLimiter;
-
-        public TradingService(HttpClientService httpClient, ApiRateLimiter rateLimiter)
-        {
-            _httpClient = httpClient;
-            _rateLimiter = rateLimiter;
-        }
-
-        public async Task<ApiResponse<OrderResponse>> PlaceOrderAsync(OrderRequest request)
-        {
-            await _rateLimiter.WaitIfNeeded("orders");
-            return await _httpClient.PostAsync<OrderRequest, ApiResponse<OrderResponse>>(
-                "/api/v1/orders", request);
-        }
-
-        public async Task<ApiResponse<bool>> CancelOrderAsync(long transactionId)
-        {
-            await _rateLimiter.WaitIfNeeded("orders");
-            var response = await _httpClient.DeleteAsync($"/api/v1/orders/{transactionId}");
-            return new ApiResponse<bool> { Data = response.IsSuccessStatusCode };
-        }
-
-        public async Task<ApiResponse<OrderResponse>> PlaceStopOrderAsync(StopOrderRequest request)
-        {
-            await _rateLimiter.WaitIfNeeded("stops");
-            return await _httpClient.PostAsync<StopOrderRequest, ApiResponse<OrderResponse>>(
-                "/api/v1/stops", request);
-        }
-
-        public async Task<ApiResponse<bool>> CancelStopOrderAsync(long transactionId)
-        {
-            await _rateLimiter.WaitIfNeeded("stops");
-            var response = await _httpClient.DeleteAsync($"/api/v1/stops/{transactionId}");
-            return new ApiResponse<bool> { Data = response.IsSuccessStatusCode };
-        }
-    }
+  }
 }
