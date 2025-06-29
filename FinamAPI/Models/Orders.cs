@@ -145,10 +145,26 @@ namespace FinamAPI.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public long? OrderNo { get; set; }
     }
+
+
     public class CancelOrderRequest
     {
         public string ClientId { get; set; }
         public long TransactionId { get; set; }
+    }
+    public class StopOrderRequest : OrderRequest
+    {
+        [JsonPropertyName("condition")]
+        public string Condition { get; set; }
+
+        [JsonPropertyName("stopPrice")]
+        public DecimalValue StopPrice { get; set; }
+
+        [JsonPropertyName("activationPrice")]
+        public DecimalValue ActivationPrice { get; set; }
+
+        [JsonPropertyName("expiryTime")]
+        public DateTime? ExpiryTime { get; set; }
     }
 }
 
