@@ -34,5 +34,5 @@ namespace FinamAPI.Services.Implementations
             return await _httpClient.GetAsync<ApiResponse<List<Candle>>>(endpoint);
         }
     }
-  }
+  
 }
