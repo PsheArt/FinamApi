@@ -1,4 +1,5 @@
-﻿using FinamAPI.Services.Interfaces;
+﻿using FinamAPI.Models;
+using FinamAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinamAPI.Controllers
@@ -13,5 +14,15 @@ namespace FinamAPI.Controllers
         {
             _marketDataService = marketDataService;
         }
+        [HttpGet("securities")]
+        public async Task<ActionResult<ApiResponse<List<Security>>>> GetSecurities(
+           [FromQuery] string board = null, [FromQuery] string seccode = null)
+        {
+
+            var response = await _marketDataService.GetSecuritiesAsync();
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
+
+
     }
 }
