@@ -23,6 +23,20 @@ namespace FinamAPI.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
 
+        [HttpGet("securities/{code}/properties")]
+        public async Task<ActionResult<SecurityProperties>> GetSecurityProperties(string code)
+        {
+            var response = await _marketDataService.GetSecuritiesAsync();
+
+            if (!response.IsSuccess || response.Data == null || !response.Data.Any())
+            {
+                return NotFound();
+            }
+
+            var security = response.Data.First();
+            return Ok(security.Properties);
+        }
+
 
     }
 }
