@@ -37,6 +37,14 @@ namespace FinamAPI.Controllers
             return Ok(security.Properties);
         }
 
+        [HttpGet("candles/{securityCode}")]
+        public async Task<ActionResult<ApiResponse<List<Candle>>>> GetCandles(
+           string securityCode, [FromQuery] DateTime from, [FromQuery] DateTime to)
+        {
+            var response = await _marketDataService.GetCandlesAsync(securityCode, from, to, "D1");
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
+
 
     }
 }
