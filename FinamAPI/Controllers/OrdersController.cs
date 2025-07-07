@@ -31,6 +31,13 @@ namespace FinamAPI.Controllers
 
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<OrderResponse>>> PlaceOrder([FromBody] OrderRequest request)
+        {
+            request.ClientId = _settings.ClientId;
+            var response = await _orderService.PlaceOrderAsync(request);
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
 
 
 
