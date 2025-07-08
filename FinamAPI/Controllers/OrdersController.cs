@@ -31,6 +31,7 @@ namespace FinamAPI.Controllers
 
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
+
         [HttpPost]
         public async Task<ActionResult<ApiResponse<OrderResponse>>> PlaceOrder([FromBody] OrderRequest request)
         {
@@ -39,6 +40,13 @@ namespace FinamAPI.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
 
+        [HttpDelete]
+        public async Task<ActionResult<ApiResponse<bool>>> CancelOrder([FromBody] CancelOrderRequest request)
+        {
+            request.ClientId = _settings.ClientId;
+            var response = await _orderService.CancelOrderAsync(request);
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
 
 
     }
