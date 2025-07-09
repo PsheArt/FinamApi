@@ -32,7 +32,7 @@ namespace FinamAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message); // 500
+                return StatusCode(500, ex.Message);
             }
         }
     }
