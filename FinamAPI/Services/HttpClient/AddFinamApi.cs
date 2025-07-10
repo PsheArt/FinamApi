@@ -14,18 +14,16 @@ namespace FinamAPI.Services.HttpClient
         {
             services.Configure<FinamApiSettings>(configuration.GetSection(FinamApiSettings.SectionName));
 
-            services.AddHttpClient<HttpClientService>()
-                .AddPolicyHandler((services, request) =>
-                    HttpPolicyExtensions.HandleTransientHttpError()
-                        .WaitAndRetryAsync(
-                            services.GetRequiredService<IOptions<FinamApiSettings>>().Value.HttpClientSettings.MaxRetryAttempts,
-                            retryAttempt => TimeSpan.FromMilliseconds(
-                                services.GetRequiredService<IOptions<FinamApiSettings>>().Value.HttpClientSettings.RetryDelayMilliseconds),
-                            onRetry: (outcome, delay, retryNumber, context) =>
-                            {
-                                services.GetService<ILogger<HttpClientService>>()?
-                                    .LogWarning($"Retry {retryNumber} after {delay.TotalMilliseconds}ms due to: {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
-                            }));
+            services.AddHttpClient<HttpClientService>().AddPolicyHandler((services, request) =>HttpPolicyExtensions.HandleTransientHttpError()
+                                                    .WaitAndRetryAsync(
+                                                        services.GetRequiredService<IOptions<FinamApiSettings>>().Value.HttpClientSettings.MaxRetryAttempts,
+                                                        retryAttempt => TimeSpan.FromMilliseconds(
+                                                            services.GetRequiredService<IOptions<FinamApiSettings>>().Value.HttpClientSettings.RetryDelayMilliseconds),
+                                                        onRetry: (outcome, delay, retryNumber, context) =>
+                                                        {
+                                                            services.GetService<ILogger<HttpClientService>>()?
+                                                                .LogWarning($"Retry {retryNumber} after {delay.TotalMilliseconds}ms due to: {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
+                                                        }));
 
             services.AddSingleton<ApiRateLimiter>();
             services.AddScoped<IAuthService, AuthService>();
