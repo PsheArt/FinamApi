@@ -45,7 +45,10 @@ namespace FinamAPI.Services.Implementations
                 $"/api/v1/stops?clientId={request.ClientId}&stopId={request.StopId}");
 
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<ApiResponse<bool>>(content);
+            if (content != null)
+                return JsonSerializer.Deserialize<ApiResponse<bool>>(content);
+            else
+                return null;
         }
     }
 }
