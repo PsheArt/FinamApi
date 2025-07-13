@@ -47,7 +47,7 @@ namespace FinamAPI.Services.Implementations
                 
                 if (response != null)
                 {
-                    response.Data.TokenExpiration = DateTime.UtcNow.AddSeconds(_authResponse.ExpiresIn - 60); // 60 сек запас
+                    response.Data.TokenExpiration = DateTime.UtcNow.AddSeconds(_authResponse.ExpiresIn - 60);
                     _logger.LogInformation("Successfully authenticated. Token expires at {0}", _authResponse.TokenExpiration);
                 }
 
