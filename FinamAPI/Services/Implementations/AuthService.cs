@@ -48,17 +48,17 @@ namespace FinamAPI.Services.Implementations
                 if (response != null)
                 {
                     response.Data.TokenExpiration = DateTime.UtcNow.AddSeconds(_authResponse.ExpiresIn - 60);
-                    _logger.LogInformation("Successfully authenticated. Token expires at {0}", _authResponse.TokenExpiration);
+                    _logger.LogInformation("Проверка подлинности завершена успешно. Срок действия токена истекает в {0}", _authResponse.TokenExpiration);
                 }
 
                 return _authResponse;
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Authentication failed with status code {StatusCode}", ex.StatusCode);
+                _logger.LogError(ex, "Не удалось выполнить аутентификацию с использованием кода состояния {StatusCode}", ex.StatusCode);
                 var errorContent = await ex.GetResponseContentAsync();
                 var error = JsonSerializer.Deserialize<AuthErrorResponse>(errorContent);
-                throw new ApiException(error?.ErrorDescription ?? "Authentication failed", ex.StatusCode ?? HttpStatusCode.BadRequest);
+                throw new ApiException(error?.ErrorDescription ?? "Не удалось выполнить аутентификацию", ex.StatusCode ?? HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
