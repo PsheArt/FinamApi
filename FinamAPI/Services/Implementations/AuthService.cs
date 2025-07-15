@@ -62,7 +62,7 @@ namespace FinamAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unexpected authentication error");
+                _logger.LogError(ex, "Неожиданная ошибка аутентификации");
                 throw;
             }
             finally
