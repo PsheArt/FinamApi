@@ -16,7 +16,7 @@ namespace FinamAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index() => Ok("Trading service is running");
+        public IActionResult Index() => Ok("Торговый сервис запущен");
 
         [HttpGet("token")]   
         public async Task<IActionResult> GetToken()
@@ -26,7 +26,7 @@ namespace FinamAPI.Controllers
                 var response = await _authService.AuthenticateAsync();
 
                 if (!response.IsSuccess)
-                    return BadRequest("Authentication failed"); 
+                    return BadRequest("Не удалось выполнить проверку подлинности"); 
 
                 return Ok(new { Token = response.AccessToken }); 
             }
