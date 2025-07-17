@@ -22,7 +22,7 @@ namespace FinamAPI.Services.HttpClient
                                                             onRetry: (outcome, delay, retryNumber, context) =>
                                                             {
                                                                 services.GetService<ILogger<HttpClientService>>()?
-                                                                    .LogWarning($"Retry {retryNumber} after {delay.TotalMilliseconds}ms due to: {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
+                                                                    .LogWarning($"Повторите попытку {retryNumber} после  {delay.TotalMilliseconds}мс из-за: {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
                                                             }));
 
             services.AddSingleton<ApiRateLimiter>();
