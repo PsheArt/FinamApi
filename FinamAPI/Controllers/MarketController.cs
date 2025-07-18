@@ -16,7 +16,7 @@ namespace FinamAPI.Controllers
         }
         [HttpGet("securities")]
         public async Task<ActionResult<ApiResponse<List<Security>>>> GetSecurities(
-           [FromQuery] string board = null, [FromQuery] string seccode = null)
+           [FromQuery] string? board = null, [FromQuery] string? seccode = null)
         {
 
             var response = await _marketDataService.GetSecuritiesAsync();
