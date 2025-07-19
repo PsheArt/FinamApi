@@ -28,7 +28,7 @@ namespace FinamAPI.Controllers
         {
             var response = await _marketDataService.GetSecuritiesAsync();
 
-            if (!response.IsSuccess || response.Data == null || !response.Data.Any())
+            if (!response.IsSuccess || response.Data == null || response.Data.Count == 0)
             {
                 return NotFound();
             }
