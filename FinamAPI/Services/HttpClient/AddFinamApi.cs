@@ -39,15 +39,19 @@ namespace FinamAPI.Services.HttpClient
             client.Timeout = TimeSpan.FromSeconds(settings.HttpClientSettings.TimeoutSeconds);
         }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(IConfiguration configuration)
+        private static IAsyncPolicy<HttpResponseMessage>? GetRetryPolicy(IConfiguration configuration)
         {
             var settings = configuration.GetSection(FinamApiSettings.SectionName).Get<FinamApiSettings>();
-            return HttpPolicyExtensions
+            if (settings != null)
+            {
+                return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .OrResult(msg => msg.StatusCode == HttpStatusCode.TooManyRequests)
                 .WaitAndRetryAsync(
                     settings.HttpClientSettings.MaxRetryAttempts,
                     retryAttempt => TimeSpan.FromMilliseconds(settings.HttpClientSettings.RetryDelayMilliseconds));
+            }
+            return null;
         }
     }
 }
