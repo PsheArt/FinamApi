@@ -98,10 +98,14 @@ namespace FinamAPI.Models
     {
         public HttpStatusCode StatusCode { get; }
 
-        public ApiException(string message, HttpStatusCode statusCode)
+        public ApiException(string message, HttpStatusCode statusCode, System.Text.Json.JsonException jsonEx)
             : base(message)
         {
             StatusCode = statusCode;
+        }
+
+        public ApiException(string? message, HttpStatusCode statusCode) : base(message)
+        {
         }
     }
 
