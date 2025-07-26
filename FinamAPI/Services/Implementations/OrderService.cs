@@ -44,8 +44,7 @@ namespace FinamAPI.Services.Implementations
             var response = await _httpClient.DeleteAsync(
                 $"v1/accounts/{request.ClientId}/orders/{request.TransactionId}");
 
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<ApiResponse<bool>>(content);
+            return JsonSerializer.Deserialize<ApiResponse<bool>>(response);
         }
     }
 }
