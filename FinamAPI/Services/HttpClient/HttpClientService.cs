@@ -84,14 +84,14 @@ namespace FinamAPI.Services.HttpClient
         public async Task<bool> DeleteAsync(string endpoint, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
-                throw new ArgumentException("Endpoint cannot be null or empty", nameof(endpoint));
+                throw new ArgumentException("Эндпоинт не может быть null или пустым", nameof(endpoint));
 
             using var response = await _httpClient.DeleteAsync(endpoint, cancellationToken).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
                 var errorContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                _logger.LogError("Delete operation failed. Endpoint: {Endpoint}, Status: {StatusCode}, Error: {Error}",
+                _logger.LogError("Операция удаления не удалась. Эндпоинт: {Endpoint}, Статус: {StatusCode}, Ошибка: {Error}",
                     endpoint, response.StatusCode, errorContent);
             }
 
