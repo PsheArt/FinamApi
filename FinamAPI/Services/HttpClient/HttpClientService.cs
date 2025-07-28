@@ -104,14 +104,13 @@ namespace FinamAPI.Services.HttpClient
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogError("API request failed. Status: {StatusCode}, Response: {Response}",
-                    response.StatusCode, content);
+                _logger.LogError("Запрос к API не удался. Статус: {StatusCode}, Ответ: {Response}", response.StatusCode, content);
 
                 try
                 {
                     var error = JsonSerializer.Deserialize<ApiResponse<object>>(content, _jsonOptions);
                     throw new ApiException(
-                        error?.Error?.Message ?? "API request failed",
+                        error?.Error?.Message ?? "Запрос к API не удался.",
                         response.StatusCode);
                 }
                 catch (JsonException jsonEx)
