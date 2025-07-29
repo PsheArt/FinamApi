@@ -115,7 +115,7 @@ namespace FinamAPI.Services.HttpClient
                 }
                 catch (JsonException jsonEx)
                 {
-                    throw new ApiException($"Failed to parse error response: {content}", response.StatusCode, jsonEx);
+                    throw new ApiException($"Не удалось разобрать ответ об ошибке: {content}", response.StatusCode, jsonEx);
                 }
             }
 
