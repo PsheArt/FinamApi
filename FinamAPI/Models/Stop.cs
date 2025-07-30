@@ -8,10 +8,10 @@ namespace FinamAPI.Models
         public long StopId { get; set; }
 
         [JsonPropertyName("securityCode")]
-        public string SecurityCode { get; set; }
+        public string? SecurityCode { get; set; }
 
         [JsonPropertyName("securityBoard")]
-        public string SecurityBoard { get; set; }
+        public string? SecurityBoard { get; set; }
 
         [JsonPropertyName("market")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -38,7 +38,7 @@ namespace FinamAPI.Models
         public StopStatus Status { get; set; }
 
         [JsonPropertyName("message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [JsonPropertyName("orderNo")]
         public long OrderNo { get; set; }
@@ -53,7 +53,7 @@ namespace FinamAPI.Models
         public DateTime? CanceledAt { get; set; }
 
         [JsonPropertyName("currency")]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         [JsonPropertyName("takeProfitExtremum")]
         public decimal TakeProfitExtremum { get; set; }
@@ -62,10 +62,10 @@ namespace FinamAPI.Models
         public decimal TakeProfitLevel { get; set; }
 
         [JsonPropertyName("stopLoss")]
-        public StopLoss StopLoss { get; set; }
+        public StopLoss? StopLoss { get; set; }
 
         [JsonPropertyName("takeProfit")]
-        public TakeProfit TakeProfit { get; set; }
+        public TakeProfit? TakeProfit { get; set; }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
