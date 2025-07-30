@@ -44,9 +44,8 @@ namespace FinamAPI.Services.Implementations
             var response = await _httpClient.DeleteAsync(
                 $"/api/v1/stops?clientId={request.ClientId}&stopId={request.StopId}");
 
-            var content = await response.Content.ReadAsStringAsync();
-            if (content != null)
-                return JsonSerializer.Deserialize<ApiResponse<bool>>(content);
+            if (response)
+                return JsonSerializer.Deserialize<ApiResponse<bool>>(response);
             else
                 return null;
         }
