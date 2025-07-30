@@ -55,7 +55,7 @@ namespace FinamAPI.Services.HttpClient
         public async Task<T> GetAsync<T>(string endpoint, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
-                throw new ArgumentException("Endpoint cannot be null or empty", nameof(endpoint));
+                throw new ArgumentException("Эндпоинт не может быть null или пустым", nameof(endpoint));
 
             using var response = await _httpClient.GetAsync(endpoint, cancellationToken).ConfigureAwait(false);
             return await HandleResponse<T>(response, cancellationToken).ConfigureAwait(false);
@@ -67,7 +67,7 @@ namespace FinamAPI.Services.HttpClient
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
-                throw new ArgumentException("Endpoint cannot be null or empty", nameof(endpoint));
+                throw new ArgumentException("Эндпоинт не может быть null или пустым", nameof(endpoint));
 
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
