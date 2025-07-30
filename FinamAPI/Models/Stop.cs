@@ -18,7 +18,7 @@ namespace FinamAPI.Models
         public Market Market { get; set; }
 
         [JsonPropertyName("clientId")]
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
         [JsonPropertyName("buySell")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
