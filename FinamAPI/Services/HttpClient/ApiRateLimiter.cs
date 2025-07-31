@@ -50,7 +50,7 @@ namespace FinamAPI.Services.HttpClient
                 delay = limitInfo.GetTimeUntilReset();
             }
 
-            _logger.LogWarning("Rate limit exceeded for {Endpoint}. Waiting {DelaySeconds} seconds...",
+            _logger.LogWarning("Вышел лимит эндпоинта {Endpoint}. Подождите {DelaySeconds} секунд...",
                 endpoint, delay.TotalSeconds);
 
             await Task.Delay(delay).ConfigureAwait(false);
