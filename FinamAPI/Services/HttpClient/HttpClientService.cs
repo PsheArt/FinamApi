@@ -125,7 +125,7 @@ namespace FinamAPI.Services.HttpClient
             }
             catch (JsonException jsonEx)
             {
-                _logger.LogError(jsonEx, "Failed to deserialize response. Content: {Content}", content);
+                _logger.LogError(jsonEx, "Ошибка при десериализации: Содержание {Content}", content);
                 throw;
             }
         }
