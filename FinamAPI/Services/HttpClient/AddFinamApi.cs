@@ -32,26 +32,6 @@ namespace FinamAPI.Services.HttpClient
 
             return services;
         }
-        private static void ConfigureHttpClient(IServiceProvider provider, System.Net.Http.HttpClient client)
-        {
-            var settings = provider.GetRequiredService<IOptions<FinamApiSettings>>().Value;
-            client.BaseAddress = new Uri(settings.BaseUrl);
-            client.Timeout = TimeSpan.FromSeconds(settings.HttpClientSettings.TimeoutSeconds);
-        }
-
-        private static IAsyncPolicy<HttpResponseMessage>? GetRetryPolicy(IConfiguration configuration)
-        {
-            var settings = configuration.GetSection(FinamApiSettings.SectionName).Get<FinamApiSettings>();
-            if (settings != null)
-            {
-                return HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .OrResult(msg => msg.StatusCode == HttpStatusCode.TooManyRequests)
-                .WaitAndRetryAsync(
-                    settings.HttpClientSettings.MaxRetryAttempts,
-                    retryAttempt => TimeSpan.FromMilliseconds(settings.HttpClientSettings.RetryDelayMilliseconds));
-            }
-            return null;
         }
     }
 }
