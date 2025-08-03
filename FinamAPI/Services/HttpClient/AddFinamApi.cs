@@ -32,6 +32,6 @@ namespace FinamAPI.Services.HttpClient
 
             return services;
         }
-        }
+        
     }
 }
