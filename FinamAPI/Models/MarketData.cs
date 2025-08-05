@@ -5,10 +5,10 @@ namespace FinamAPI.Models
     public class Security
     {
         [JsonPropertyName("code")]
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         [JsonPropertyName("board")]
-        public string Board { get; set; }
+        public string? Board { get; set; }
 
         [JsonPropertyName("market")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -24,10 +24,10 @@ namespace FinamAPI.Models
         public decimal MinStep { get; set; }
 
         [JsonPropertyName("currency")]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         [JsonPropertyName("shortName")]
-        public string ShortName { get; set; }
+        public string? ShortName { get; set; }
 
         [JsonPropertyName("properties")]
         public int PropertiesValue { get; set; }
@@ -36,7 +36,7 @@ namespace FinamAPI.Models
         public SecurityProperties Properties => new SecurityProperties(PropertiesValue);
 
         [JsonPropertyName("timeZoneName")]
-        public string TimeZoneName { get; set; }
+        public string? TimeZoneName { get; set; }
 
         [JsonPropertyName("bpCost")]
         public decimal BpCost { get; set; }
@@ -49,7 +49,7 @@ namespace FinamAPI.Models
         public PriceSign PriceSign { get; set; }
 
         [JsonPropertyName("ticker")]
-        public string Ticker { get; set; }
+        public string? Ticker { get; set; }
 
         [JsonPropertyName("lotDivider")]
         public int LotDivider { get; set; }
