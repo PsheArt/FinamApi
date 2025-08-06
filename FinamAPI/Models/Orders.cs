@@ -11,10 +11,10 @@ namespace FinamAPI.Models
         public long TransactionId { get; set; }
 
         [JsonPropertyName("securityCode")]
-        public string SecurityCode { get; set; }
+        public string? SecurityCode { get; set; }
 
         [JsonPropertyName("clientId")]
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -37,10 +37,10 @@ namespace FinamAPI.Models
         public int Balance { get; set; }
 
         [JsonPropertyName("message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [JsonPropertyName("currency")]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         [JsonPropertyName("condition")]
         public OrderCondition Condition { get; set; }
@@ -52,7 +52,7 @@ namespace FinamAPI.Models
         public DateTime AcceptedAt { get; set; }
 
         [JsonPropertyName("securityBoard")]
-        public string SecurityBoard { get; set; }
+        public string? SecurityBoard { get; set; }
 
         [JsonPropertyName("market")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -108,13 +108,13 @@ namespace FinamAPI.Models
     public class OrderRequest
     {
         [JsonPropertyName("clientId")]
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
         [JsonPropertyName("securityCode")]
-        public string SecurityCode { get; set; }
+        public string? SecurityCode { get; set; }
 
         [JsonPropertyName("board")]
-        public string Board { get; set; }
+        public string? Board { get; set; }
 
         [JsonPropertyName("market")]
         public Market Market { get; set; }
@@ -129,7 +129,7 @@ namespace FinamAPI.Models
         public DecimalValue Price { get; set; }
 
         [JsonPropertyName("property")]
-        public string Property { get; set; } = "PutInQueue";
+        public string? Property { get; set; } = "PutInQueue";
 
         [JsonPropertyName("validBefore")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -155,7 +155,7 @@ namespace FinamAPI.Models
     public class StopOrderRequest : OrderRequest
     {
         [JsonPropertyName("condition")]
-        public string Condition { get; set; }
+        public string? Condition { get; set; }
 
         [JsonPropertyName("stopPrice")]
         public DecimalValue StopPrice { get; set; }
